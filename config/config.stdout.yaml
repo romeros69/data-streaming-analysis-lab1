@@ -1,0 +1,47 @@
+generator:
+  rate: 10
+  output_format: "json"
+  
+  operation_weights:
+    GetObject: 35
+    PutObject: 20
+    DeleteObject: 8
+    HeadObject: 5
+    ListObjectsV2: 5
+    ListObjectsV1: 3
+    ListBuckets: 3
+    CreateBucket: 2
+    CopyObject: 2
+    CreateMultipartUpload: 2
+    UploadPart: 4
+    CompleteMultipartUpload: 1.5
+    DeleteBucket: 0.5
+    HeadBucket: 1
+    ListParts: 1
+    AbortMultipartUpload: 0.5
+  
+  defaults:
+    error_percent: 5
+    error_status_distribution:
+      404: 40
+      500: 30
+      504: 20
+      403: 10
+    duration:
+      success_min: 0.05
+      success_max: 0.5
+      error_min: 0.01
+      error_max: 0.2
+  
+  problematic_buckets:
+    - name: "broken-shard-bucket"
+      error_multiplier: 3.0
+      duration_multiplier: 2.0
+      error_status_distribution:
+        500: 50
+        504: 40
+        403: 10
+    
+    - name: "slow-sync-bucket"
+      error_multiplier: 1.5
+      duration_multiplier: 5.0
