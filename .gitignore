@@ -28,7 +28,8 @@ go.work.sum
 .env
 
 # Binaries
-log-generator
+/bin/log-generator
+/log-generator
 bin/
 
 # Editor/IDE
